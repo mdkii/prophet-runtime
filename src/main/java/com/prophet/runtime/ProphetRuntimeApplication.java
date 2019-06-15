@@ -8,7 +8,6 @@ public class ProphetRuntimeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProphetRuntimeApplication.class, args);
-
 	}
 
 }
