@@ -50,7 +50,7 @@ public class FirstModel {
             graph.importGraphDef(graphBytes);
 
             try (Session session = new Session(graph)) {
-                Tensor<?> out = session.runner().feed("X", Tensor.create(2.0f)).fetch("results").run().get(0);
+                Tensor<?> out = session.runner().feed("X", Tensor.create(1.0f)).fetch("results").run().get(0);
                 r = new float[1];
                 out.copyTo(r);
                 System.out.println(r[0]);
