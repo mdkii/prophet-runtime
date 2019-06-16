@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 public class ModelController {
 
@@ -16,7 +18,13 @@ public class ModelController {
 
     @RequestMapping("/firstModel")
     public String RequestHandler() {
-        FirstModel firstModel = modelService.getModleByName("firstModel");
+        FirstModel firstModel;
+        try {
+            firstModel = modelService.getModleByName("firstModel");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "-2.0";
+        }
         return String.valueOf(firstModel.execute());
 
     }

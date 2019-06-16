@@ -4,23 +4,23 @@ import com.prophet.runtime.domain.FirstModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class ModelSevice {
 
     @Value("${model.path}")
     private String modelPath;
 
-    public String getModelPath() {
-        return modelPath;
+    public String getModelPath() throws IOException {
+
+        return this.getClass().getClassLoader().getResource("").getPath()
+         + modelPath;
     }
 
-    public void setModelPath(String modelPath) {
-        this.modelPath = modelPath;
-    }
 
-
-    public FirstModel getModleByName(String modelName) {
+    public FirstModel getModleByName(String modelName) throws IOException {
         String fileName = modelName + ".pb";
-        return new FirstModel(modelPath+fileName);
+        return new FirstModel(getModelPath() +fileName);
     }
 }
