@@ -1,25 +1,27 @@
 package com.prophet.runtime.domain;
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.stereotype.Component;
 import org.tensorflow.Graph;
 import org.tensorflow.Session;
 import org.tensorflow.Tensor;
 
 import java.io.FileInputStream;
 
-public class FirstModel {
+@Component
+public class FirstModel implements Model {
 
-    private int id;
+    private String id = "firstModel";
     private String name = "firstModel";
-    private String fileName;
+    private String fileName = "firstModel.pb";
+    private String type = "Tensor";
 
-
-    public FirstModel(String fileName) {
-        this.fileName = fileName;
+    static {
+        ModelManager.register(new FirstModel());
     }
 
 
-    public int getId() {
+    public String getID() {
         return id;
     }
 
@@ -39,10 +41,19 @@ public class FirstModel {
         this.name = name;
     }
 
-    public float execute() {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String execute() {
 
         float[] r = {-1.0f};
 
+        fileName = this.getClass().getClassLoader().getResource("").getPath() + "model/" + fileName;
         System.out.println("###### model.fullpath=" + fileName);
 
         try (Graph graph = new Graph()) {
@@ -58,6 +69,6 @@ public class FirstModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return r[0];
+        return String.valueOf(r[0]);
     }
 }
